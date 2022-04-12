@@ -6,6 +6,5 @@ import javax.inject.Inject
 class RedditDataUseCase @Inject constructor(
     private val redditDataRepository: RedditDataRepository
 ) {
-    fun getData() {
-    }
+
 }
