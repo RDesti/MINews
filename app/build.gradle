@@ -50,6 +50,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime:$paging_version")
 
     implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
+    implementation "com.squareup.picasso:picasso:$picasso_lib_version"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"

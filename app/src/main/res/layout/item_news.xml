@@ -4,6 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <variable
+            name="topContentModel"
+            type="com.example.minews.entity.TopContentModel" />
 
     </data>
 
@@ -33,7 +36,8 @@
                 android:id="@+id/autorNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Autor"
+                android:text="@{topContentModel.autor}"
+                tools:text="Autor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/avatarImage"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
-            android:text="X hours ago"
+            android:text="@{topContentModel.timeAgo}"
+            tools:text="19 hours ago"
             app:layout_constraintBottom_toBottomOf="@+id/autorInfoContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +71,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="10dp"
-                android:text="TextViewNewskxhgixhgxrhgxdKHDGZuvjjcjcvjcvjcvjvjvjvjhguidhg"
+                android:text="@{topContentModel.title}"
+                tools:text="TextViewNewskxhgixhgxrhgxdKHDGZuvjjcjcvjcvjcvjvjvjvjhguidhg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/contentPreviewImage"
                 app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +124,8 @@
                 android:id="@+id/commentCounterText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comments"
+                tools:text="Comments"
+                android:text="@{topContentModel.commentsCount}"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintStart_toEndOf="@+id/imageView4"
                 app:layout_constraintTop_toTopOf="@+id/imageView4" />

@@ -1,24 +1,12 @@
 package com.example.minews.repositories
 
-import com.example.minews.network.api.RedditApiService
-import java.lang.Exception
+import com.example.minews.requesters.IRedditDataRequester
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RedditDataRepository @Inject constructor(
-    private val redditApiService: RedditApiService
+    private val redditDataRequester: IRedditDataRequester
 ) {
-    suspend fun sendRequestRedditData() {
-        try {
-            val result = redditApiService.getTopData()
-            if (result.isSuccessful) {
-                val m = ""
-            } else {
-                val g = ""
-            }
-        } catch (e: Exception) {
 
-        }
-    }
 }
