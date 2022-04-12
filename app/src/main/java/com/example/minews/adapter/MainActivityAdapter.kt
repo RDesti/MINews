@@ -31,6 +31,7 @@ class MainActivityAdapter :
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.newsBinding.topContentModel = getItem(position)
+        getItem(position)?.let { holder.bind(it) }
         holder.itemView.setOnClickListener {
         }
     }

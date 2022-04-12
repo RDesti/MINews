@@ -30,12 +30,13 @@
                 android:layout_height="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_reddit" />
+                app:srcCompat="@drawable/ic_default_avatar" />
 
             <TextView
                 android:id="@+id/autorNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="@{topContentModel.autor}"
                 tools:text="Autor"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -69,19 +70,21 @@
             <TextView
                 android:id="@+id/contentHeaderText"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="@{topContentModel.title}"
-                tools:text="TextViewNewskxhgixhgxrhgxdKHDGZuvjjcjcvjcvjcvjvjvjvjhguidhg"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/contentPreviewImage"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="TextViewNewskxhgixhgxrhgxdKHDGZuvjjcjcvjcvjcvjvjvjvjhguidhg" />
 
             <ImageView
                 android:id="@+id/contentPreviewImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -96,6 +99,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="60dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,29 +110,34 @@
             android:id="@+id/commentConstraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/lineConstraint"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainContentInfoContainer"
+            app:layout_constraintVertical_bias="1.0">
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@drawable/ic_comments" />
 
             <TextView
                 android:id="@+id/commentCounterText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Comments"
+                android:layout_marginStart="5dp"
                 android:text="@{topContentModel.commentsCount}"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintStart_toEndOf="@+id/imageView4"
-                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+                app:layout_constraintTop_toTopOf="@+id/imageView4"
+                tools:text="Comments" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

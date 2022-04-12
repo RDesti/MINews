@@ -10,7 +10,6 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-
 class RedditPagingSource @Inject constructor(
     private val redditDataRequester: IRedditDataRequester
 ) : PagingSource<Int, TopContentModel>() {
@@ -54,14 +53,18 @@ class RedditPagingSource @Inject constructor(
                 it.data.id?.let { it1 ->
                     it.data.author?.let { it2 ->
                         it.data.title?.let { it3 ->
-                            tmpModel = TopContentModel(
-                                it1,
-                                it2, it.data.created_utc.toString(),
-                                it3,
-                                it.data.thumbnail,
-                                it.data.url,
-                                it.data.num_comments.toString()
-                            )
+                            tmpModel =
+                                it.data.created_utc?.let { it4 -> formattedDate(it4) }?.let { it5 ->
+                                    TopContentModel(
+                                        it1,
+                                        it2,
+                                        it5,
+                                        it3,
+                                        it.data.thumbnail,
+                                        it.data.url,
+                                        it.data.num_comments.toString()
+                                    )
+                                }
                         }
                     }
                 }
@@ -69,5 +72,12 @@ class RedditPagingSource @Inject constructor(
             listModel.add(tmpModel ?: return@forEach)
         }
         return listModel
+    }
+
+    private fun formattedDate(date: Double): String {
+        val currentTime = System.currentTimeMillis().toDouble()
+        val timeAgo = (currentTime - date*1000) / 3600000
+        return if (timeAgo > 0) "${timeAgo.toInt()} hours ago"
+        else "now"
     }
 }
