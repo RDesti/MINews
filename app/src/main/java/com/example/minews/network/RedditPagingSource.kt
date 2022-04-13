@@ -61,7 +61,10 @@ class RedditPagingSource @Inject constructor(
                                         it5,
                                         it3,
                                         it.data.thumbnail,
-                                        it.data.url,
+                                        if (!it.data.is_video!!) it.data.url else it.data.media?.reddit_video?.fallback_url?.replace(
+                                            "?source=fallback",
+                                            ""
+                                        ),
                                         it.data.num_comments.toString()
                                     )
                                 }
@@ -76,7 +79,7 @@ class RedditPagingSource @Inject constructor(
 
     private fun formattedDate(date: Double): String {
         val currentTime = System.currentTimeMillis().toDouble()
-        val timeAgo = (currentTime - date*1000) / 3600000
+        val timeAgo = (currentTime - date * 1000) / 3600000
         return if (timeAgo > 0) "${timeAgo.toInt()} hours ago"
         else "now"
     }

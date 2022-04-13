@@ -10,29 +10,46 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.minews.R
 import com.example.minews.databinding.ItemNewsBinding
 import com.example.minews.entity.TopContentModel
-import com.example.minews.network.parseModels.Children
 import com.squareup.picasso.Picasso
 
-class MainActivityAdapter :
-    PagingDataAdapter<TopContentModel, MainActivityAdapter.MainViewHolder>(DataDiffItemCallback) {
+class MainActivityAdapter(
+    private val thumbnailClickListener: (TopContentModel) -> Unit,
+    private val downloadButtonClickListener: (TopContentModel) -> Unit
+) : PagingDataAdapter<TopContentModel, MainActivityAdapter.MainViewHolder>(DataDiffItemCallback) {
 
     class MainViewHolder(val newsBinding: ItemNewsBinding) :
         RecyclerView.ViewHolder(newsBinding.root) {
 
-        fun bind(topContentModel: TopContentModel) {
+        fun bind(
+            topContentModel: TopContentModel,
+            thumbnailClickListener: (TopContentModel) -> Unit,
+            downloadButtonClickListener: (TopContentModel) -> Unit
+        ) {
             if (!topContentModel.thumbnail.isNullOrEmpty()) {
                 newsBinding.contentPreviewImage.visibility = View.VISIBLE
                 Picasso.get().load(topContentModel.thumbnail).into(newsBinding.contentPreviewImage)
             } else {
                 newsBinding.contentPreviewImage.visibility = View.GONE
             }
+
+            newsBinding.contentPreviewImage.setOnClickListener {
+                thumbnailClickListener(topContentModel)
+            }
+
+            newsBinding.fileDownloadImage.setOnClickListener {
+                downloadButtonClickListener(topContentModel)
+            }
         }
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.newsBinding.topContentModel = getItem(position)
-        getItem(position)?.let { holder.bind(it) }
-        holder.itemView.setOnClickListener {
+        getItem(position)?.let {
+            holder.bind(
+                it,
+                thumbnailClickListener,
+                downloadButtonClickListener
+            )
         }
     }
 
