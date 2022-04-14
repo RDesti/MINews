@@ -27,17 +27,22 @@ class RedditPagingSource @Inject constructor(
 
         return try {
             val responseModel = redditDataRequester.sendRequest(AppDefaultValues.NEXT_PAGE_KEY)
-            AppDefaultValues.NEXT_PAGE_KEY = responseModel?.data?.after ?: ""
-            val items =
-                responseModel?.data?.children?.let { createTopContentModel(it) } ?: emptyList()
-            val nextKey = if (items.size < pageSize) null else page + 1
-            val prevKey = if (page == 1) null else page - 1
+            if (responseModel == null || !responseModel.isSuccessful) {
+                return LoadResult.Error(HttpException(responseModel))
+            } else {
+                AppDefaultValues.NEXT_PAGE_KEY = responseModel.body()?.data?.after ?: ""
+                val items =
+                    responseModel.body()?.data?.children?.let { createTopContentModel(it) }
+                        ?: emptyList()
+                val nextKey = if (items.size < pageSize) null else page + 1
 
-            LoadResult.Page(
-                data = items,
-                prevKey = prevKey,
-                nextKey = nextKey
-            )
+                LoadResult.Page(
+                    data = items,
+                    prevKey = null,
+                    nextKey = nextKey
+                )
+            }
+
         } catch (exception: IOException) {
             return LoadResult.Error(exception)
         } catch (exception: HttpException) {

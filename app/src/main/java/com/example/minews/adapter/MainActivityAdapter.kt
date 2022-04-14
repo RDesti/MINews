@@ -25,9 +25,9 @@ class MainActivityAdapter(
             thumbnailClickListener: (TopContentModel) -> Unit,
             downloadButtonClickListener: (TopContentModel) -> Unit
         ) {
-            if (!topContentModel.thumbnail.isNullOrEmpty()) {
+            if (!topContentModel.thumbnailUrl.isNullOrEmpty()) {
                 newsBinding.contentPreviewImage.visibility = View.VISIBLE
-                Picasso.get().load(topContentModel.thumbnail).into(newsBinding.contentPreviewImage)
+                Picasso.get().load(topContentModel.thumbnailUrl).into(newsBinding.contentPreviewImage)
             } else {
                 newsBinding.contentPreviewImage.visibility = View.GONE
             }

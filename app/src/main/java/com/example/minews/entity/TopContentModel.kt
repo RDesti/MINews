@@ -5,8 +5,8 @@ data class TopContentModel(
     var autor: String,
     var timeAgo: String,
     var title: String,
-    var thumbnail: String? = null,
-    var fullImage: String? = null,
+    var thumbnailUrl: String? = null,
+    var fullFileUrl: String? = null,
     var commentsCount: String?
 ) {
     override fun equals(other: Any?): Boolean {
@@ -27,10 +27,10 @@ data class TopContentModel(
         if (title != other.title) {
             return false
         }
-        if (thumbnail != other.thumbnail) {
+        if (thumbnailUrl != other.thumbnailUrl) {
             return false
         }
-        if (fullImage != other.fullImage) {
+        if (fullFileUrl != other.fullFileUrl) {
             return false
         }
         if (commentsCount != other.commentsCount) {

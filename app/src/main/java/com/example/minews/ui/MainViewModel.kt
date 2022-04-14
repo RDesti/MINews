@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(
     fun getData(): Flow<PagingData<TopContentModel>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 25,
+                pageSize = 5,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { redditPagingSource }

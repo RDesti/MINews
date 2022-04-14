@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -16,10 +17,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.minews.R
 import com.example.minews.adapter.MainActivityAdapter
+import com.example.minews.adapter.MainLoadStateAdapter
 import com.example.minews.databinding.ActivityMainBinding
 import com.example.minews.entity.TopContentModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.count
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -48,20 +51,23 @@ class MainActivity : AppCompatActivity() {
         _adapter = MainActivityAdapter({ model -> clickCardThumbnail(model) },
             { model -> clickFileDownload(model) })
         _binding.recycler.layoutManager = LinearLayoutManager(applicationContext)
-        _binding.recycler.adapter = _adapter
+        _binding.recycler.adapter = _adapter?.withLoadStateHeaderAndFooter(
+            header = MainLoadStateAdapter { _adapter?.retry() },
+            footer = MainLoadStateAdapter { _adapter?.retry() }
+        )
     }
 
     private fun clickCardThumbnail(model: TopContentModel) {
-        if (!model.fullImage.isNullOrEmpty()) {
-            openFileUrl(model.fullImage ?: return)
+        if (!model.fullFileUrl.isNullOrEmpty()) {
+            openFileUrl(model.fullFileUrl ?: return)
         }
     }
 
     private fun clickFileDownload(model: TopContentModel) {
         val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val uri =
-            Uri.parse(model.fullImage)
-        val type = model.fullImage?.substringAfterLast('.')
+            Uri.parse(model.fullFileUrl)
+        val type = model.fullFileUrl?.substringAfterLast('.')
 
         if ((type?.length ?: return) < 4) {
             val request = DownloadManager.Request(uri)
