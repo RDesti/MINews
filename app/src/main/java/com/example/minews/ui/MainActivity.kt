@@ -8,12 +8,14 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.minews.R
 import com.example.minews.adapter.MainActivityAdapter
@@ -22,7 +24,6 @@ import com.example.minews.databinding.ActivityMainBinding
 import com.example.minews.entity.TopContentModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.count
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -55,6 +56,12 @@ class MainActivity : AppCompatActivity() {
             header = MainLoadStateAdapter { _adapter?.retry() },
             footer = MainLoadStateAdapter { _adapter?.retry() }
         )
+
+        _adapter?.addLoadStateListener { state: CombinedLoadStates ->
+            _binding.recycler.isVisible = state.refresh != LoadState.Loading
+            _binding.loadingAnimation.isVisible = state.refresh == LoadState.Loading
+
+        }
     }
 
     private fun clickCardThumbnail(model: TopContentModel) {

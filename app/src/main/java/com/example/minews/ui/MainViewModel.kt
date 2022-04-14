@@ -17,14 +17,18 @@ class MainViewModel @Inject constructor(
     private val redditPagingSource: RedditPagingSource
 
 ) : ViewModel() {
+    private var contentPagingData: Flow<PagingData<TopContentModel>>? = null
 
     fun getData(): Flow<PagingData<TopContentModel>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { redditPagingSource }
-        ).flow.cachedIn(viewModelScope)
+        if (contentPagingData == null) {
+            contentPagingData = Pager(
+                config = PagingConfig(
+                    pageSize = 5,
+                    enablePlaceholders = false
+                ),
+                pagingSourceFactory = { redditPagingSource }
+            ).flow.cachedIn(viewModelScope)
+        }
+        return contentPagingData as Flow<PagingData<TopContentModel>>
     }
 }
