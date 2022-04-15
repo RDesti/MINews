@@ -1,6 +1,6 @@
 package com.example.minews.network.parseModels
 
-data class DataX(
+data class DataChildren(
     val author: String?,
     val created_utc: Double?,
     val id: String?,
