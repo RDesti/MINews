@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MINews</string>
+    <string name="app_full_name">Most interesting news</string>
+    <string name="error_footer"><u>Oops…something went wrong…Retry?</u></string>
 </resources>
